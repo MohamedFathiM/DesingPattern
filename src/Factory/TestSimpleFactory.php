@@ -1,5 +1,6 @@
 <?php
-require "SimpleFactory.php";
+
+namespace DesignPattern\Factory;
 
 use PHPUnit\Framework\TestCase;
 

@@ -1,5 +1,6 @@
 <?php
 
+namespace DesignPattern\State\States;
 
 class StateDone implements State
 {

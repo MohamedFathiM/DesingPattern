@@ -1,8 +1,9 @@
 <?php
 
+namespace DesignPattern\State;
+
 use PHPUnit\Framework\TestCase;
 
-require "State/OrderContext.php";
 
 class StateTest extends TestCase
 {

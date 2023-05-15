@@ -1,6 +1,6 @@
 <?php
 
-require "State/States/StateCreated.php";
+namespace DesignPattern\State;
 
 class OrderContext
 {

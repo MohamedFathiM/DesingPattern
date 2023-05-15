@@ -1,5 +1,9 @@
 <?php
 
+namespace DesignPattern\Singleton;
+
+use Exception;
+
 final class Singleton
 {
     private static $instance = null;
@@ -22,4 +26,3 @@ final class Singleton
         throw new Exception("Cannot Unserialize Singleton");
     }
 }
-

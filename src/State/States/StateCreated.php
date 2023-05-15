@@ -1,6 +1,9 @@
 <?php
 
-require "StateShipped.php";
+namespace DesignPattern\State\States;
+
+use DesignPattern\State\OrderContext;
+use DesignPattern\State\State;
 
 class StateCreated implements State
 {

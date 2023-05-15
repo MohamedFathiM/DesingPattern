@@ -1,6 +1,6 @@
 <?php
 
-require "Bicycle.php";
+namespace DesignPattern\Factory;
 
 class SimpleFactory
 {

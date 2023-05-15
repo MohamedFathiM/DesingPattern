@@ -1,7 +1,6 @@
 <?php
 
-require "State/State.php";
-require "StateDone.php";
+namespace DesignPattern\State\States;
 
 class StateShipped implements State
 {

@@ -1,6 +1,6 @@
 <?php
 
-require "Singleton.php";
+namespace DesignPattern\Singleton;
 
 use PHPUnit\Framework\TestCase;
 
