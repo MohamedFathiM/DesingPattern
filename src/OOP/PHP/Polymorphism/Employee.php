@@ -1,19 +1,19 @@
 <?php
 
-namespace DesignPattern\OOP\PHP;
+namespace DesignPattern\OOP\PHP\Polymorphism;
 
 class Employee
 {
     private string $name;
     private int $age;
-    private int $salary ;
+    private Salary $salary ;
 
     /**
      * @param string $name
      * @param int $age
-     * @param int $salary
+     * @param Salary $salary
      */
-    public function __construct(string $name, int $age, int $salary)
+    public function __construct(string $name, int $age, Salary $salary)
     {
         $this->name = $name;
         $this->age = $age;
@@ -30,7 +30,7 @@ class Employee
         return $this->age;
     }
 
-    public function getSalary(): int
+    public function getSalary(): Salary
     {
         return $this->salary;
     }
