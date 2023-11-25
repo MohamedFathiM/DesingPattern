@@ -75,3 +75,36 @@ $ali->assignTempTeacher($khaled);
 var_dump("Ali is assigned to {$khaled->getName()} " . "And his score is : " . $khaled->evaluateStudentHomeWork($ali));
 $ali->assignTempTeacher($ahmedTeacher);
 var_dump("Ali is assigned to {$ahmedTeacher->getName()} " . "And his score is : " . $ahmedTeacher->evaluateStudentHomeWork($ali));
+
+
+// Aggregation
+$dev1 = new \DesignPattern\OOP\PHP\Relationship\Aggregation\Developer("Mohamed");
+$dev2 = new \DesignPattern\OOP\PHP\Relationship\Aggregation\Developer("Ahmed");
+$dev3 = new \DesignPattern\OOP\PHP\Relationship\Aggregation\Developer("Ali");
+
+$project = new \DesignPattern\OOP\PHP\Relationship\Aggregation\Project(
+    "project-x",
+    new DateTime('now'),
+    [$dev1, $dev2, $dev3]
+);
+$project->setDeadLineTo(new DateInterval('P1M'));
+
+var_dump($project->showProjectInfo());
+
+// Composition (strong relationship)
+$room1 = new \DesignPattern\OOP\PHP\Relationship\Composition\Room('White', 120);
+$room2 = new \DesignPattern\OOP\PHP\Relationship\Composition\Room('Green', 150);
+$room3 = new \DesignPattern\OOP\PHP\Relationship\Composition\Room('Black', 160);
+
+$house = new \DesignPattern\OOP\PHP\Relationship\Composition\House([$room1, $room2, $room3]);
+
+
+# Summary of Relationships Types
+/**
+ * Association
+ * Aggregation (Has_a) Project Has A Developer
+ * Composition (part_of) Room part of House
+ *
+ * Inheritance - Generalization (is_a) - Manager is an employee
+ *
+ */
