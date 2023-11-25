@@ -63,3 +63,15 @@ $ahmed = new \DesignPattern\OOP\PHP\Polymorphism\Employee(
 );
 
 var_dump($ahmed->getSalary()->calculateSalary());
+var_dump($ahmed->getSalary()->calculateSalary(0.1));
+
+$khaled = new \DesignPattern\OOP\PHP\Relationship\Association\Teacher\ScienceTeacher("Khaled");
+$ahmedTeacher = new \DesignPattern\OOP\PHP\Relationship\Association\Teacher\ScienceTeacher("Ahmed");
+
+var_dump($khaled->sayWelcome(new \DesignPattern\OOP\PHP\Relationship\Association\Printer\PlainTextPrinter()));
+
+$ali = new \DesignPattern\OOP\PHP\Relationship\Association\Student("Ali");
+$ali->assignTempTeacher($khaled);
+var_dump("Ali is assigned to {$khaled->getName()} " . "And his score is : " . $khaled->evaluateStudentHomeWork($ali));
+$ali->assignTempTeacher($ahmedTeacher);
+var_dump("Ali is assigned to {$ahmedTeacher->getName()} " . "And his score is : " . $ahmedTeacher->evaluateStudentHomeWork($ali));
