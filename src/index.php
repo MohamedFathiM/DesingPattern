@@ -108,3 +108,10 @@ $house = new \DesignPattern\OOP\PHP\Relationship\Composition\House([$room1, $roo
  * Inheritance - Generalization (is_a) - Manager is an employee
  *
  */
+
+
+// Factory Method
+$systemDialog = new \DesignPattern\Creational\FactoryMethod\Dialog\SystemDialog();
+var_dump($systemDialog->render());
+$uiDialog = new \DesignPattern\Creational\FactoryMethod\Dialog\UiDialog();
+var_dump($uiDialog->render());
