@@ -115,3 +115,10 @@ $systemDialog = new \DesignPattern\Creational\FactoryMethod\Dialog\SystemDialog(
 var_dump($systemDialog->render());
 $uiDialog = new \DesignPattern\Creational\FactoryMethod\Dialog\UiDialog();
 var_dump($uiDialog->render());
+
+
+// builder
+$director = new \DesignPattern\Creational\Builder\Director(new \DesignPattern\Creational\Builder\Builder\Builders\BuilderCs());
+$director->changeBuilder(new \DesignPattern\Creational\Builder\Builder\Builders\BuilderFull());
+$computer = $director->makeComputer();
+var_dump($computer);
