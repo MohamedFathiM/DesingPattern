@@ -16,11 +16,11 @@ $mohamed = new \DesignPattern\OOP\PHP\Polymorphism\Employee(
 );
 
 $microwave = new \DesignPattern\OOP\PHP\AbstractionVSEncapsulation\Microwave(90, 'DE1', 30);
-var_dump($mohamed->getName());
-var_dump($mohamed->getAge());
+//var_dump($mohamed->getName());
+//var_dump($mohamed->getAge());
 
 if ($microwave->turnOn()) {
-    var_dump($microwave->deFreeze());
+//    var_dump($microwave->deFreeze());
     $microwave->turnOff();
 }
 
@@ -41,12 +41,12 @@ $mercedes = new \DesignPattern\OOP\PHP\AbstractionVSEncapsulation\Mercedes(
 $order1 = new \DesignPattern\OOP\PHP\AbstractionVSEncapsulation\Order('Cairo', 'Alex', 120);
 $order2 = new \DesignPattern\OOP\PHP\AbstractionVSEncapsulation\Order('Suhag', 'Aswan', 300);
 
-var_dump($order1->deliverOrder($bmw));
-var_dump($order2->deliverOrder($mercedes));
+//var_dump($order1->deliverOrder($bmw));
+//var_dump($order2->deliverOrder($mercedes));
 
 // Encapsulation
 $bmw->installDashboard(new \DesignPattern\OOP\PHP\AbstractionVSEncapsulation\CarDashboard(5, 9, 100));
-var_dump($bmw->getCarDashboard());
+//var_dump($bmw->getCarDashboard());
 
 $ahmed = new \DesignPattern\OOP\PHP\Polymorphism\Employee(
     'Ahmed',
@@ -62,19 +62,19 @@ $ahmed = new \DesignPattern\OOP\PHP\Polymorphism\Employee(
     )
 );
 
-var_dump($ahmed->getSalary()->calculateSalary());
-var_dump($ahmed->getSalary()->calculateSalary(0.1));
+//var_dump($ahmed->getSalary()->calculateSalary());
+//var_dump($ahmed->getSalary()->calculateSalary(0.1));
 
 $khaled = new \DesignPattern\OOP\PHP\Relationship\Association\Teacher\ScienceTeacher("Khaled");
 $ahmedTeacher = new \DesignPattern\OOP\PHP\Relationship\Association\Teacher\ScienceTeacher("Ahmed");
 
-var_dump($khaled->sayWelcome(new \DesignPattern\OOP\PHP\Relationship\Association\Printer\PlainTextPrinter()));
+//var_dump($khaled->sayWelcome(new \DesignPattern\OOP\PHP\Relationship\Association\Printer\PlainTextPrinter()));
 
 $ali = new \DesignPattern\OOP\PHP\Relationship\Association\Student("Ali");
 $ali->assignTempTeacher($khaled);
-var_dump("Ali is assigned to {$khaled->getName()} " . "And his score is : " . $khaled->evaluateStudentHomeWork($ali));
+//var_dump("Ali is assigned to {$khaled->getName()} " . "And his score is : " . $khaled->evaluateStudentHomeWork($ali));
 $ali->assignTempTeacher($ahmedTeacher);
-var_dump("Ali is assigned to {$ahmedTeacher->getName()} " . "And his score is : " . $ahmedTeacher->evaluateStudentHomeWork($ali));
+//var_dump("Ali is assigned to {$ahmedTeacher->getName()} " . "And his score is : " . $ahmedTeacher->evaluateStudentHomeWork($ali));
 
 
 // Aggregation
@@ -89,7 +89,7 @@ $project = new \DesignPattern\OOP\PHP\Relationship\Aggregation\Project(
 );
 $project->setDeadLineTo(new DateInterval('P1M'));
 
-var_dump($project->showProjectInfo());
+//var_dump($project->showProjectInfo());
 
 // Composition (strong relationship)
 $room1 = new \DesignPattern\OOP\PHP\Relationship\Composition\Room('White', 120);
@@ -112,13 +112,41 @@ $house = new \DesignPattern\OOP\PHP\Relationship\Composition\House([$room1, $roo
 
 // Factory Method
 $systemDialog = new \DesignPattern\Creational\FactoryMethod\Dialog\SystemDialog();
-var_dump($systemDialog->render());
+//var_dump($systemDialog->render());
 $uiDialog = new \DesignPattern\Creational\FactoryMethod\Dialog\UiDialog();
-var_dump($uiDialog->render());
+//var_dump($uiDialog->render());
 
 
 // builder
 $director = new \DesignPattern\Creational\Builder\Director(new \DesignPattern\Creational\Builder\Builder\Builders\BuilderCs());
 $director->changeBuilder(new \DesignPattern\Creational\Builder\Builder\Builders\BuilderFull());
 $computer = $director->makeComputer();
-var_dump($computer);
+//var_dump($computer);
+
+// prototype
+$prototypeMohamedEmployee = new \DesignPattern\Creational\Prototype\EmployeePrototype(
+    new \DesignPattern\Creational\Prototype\EmployeeData\ProfileData(
+        'Mohamed',
+        30,
+        new \DesignPattern\Creational\Prototype\EmployeeData\Address(
+            150.025,
+            120.5,
+            'Alazher',
+            'Damietta',
+            'Egypt',
+            1,
+            1254545
+        ),
+        '021545454',
+        '020101554646',
+        'mohamed@slack.net'
+    ),
+    new \DesignPattern\Creational\Prototype\EmployeeData\Salary(1200, 0.02, 100),
+    new \DesignPattern\Creational\Prototype\EmployeeData\Privileges\Privileges([
+        new \DesignPattern\Creational\Prototype\EmployeeData\Privileges\Types\ServerProjectPrivilege(),
+        new \DesignPattern\Creational\Prototype\EmployeeData\Privileges\Types\NetworkProjectPrivilege()
+    ])
+);
+
+$ahmedSampleFromPrototype = clone $prototypeMohamedEmployee;
+var_dump($ahmedSampleFromPrototype);
