@@ -1,5 +1,9 @@
 <?php
 
+use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\WebForm;
+use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\MobileForm;
+use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory;
+
 require_once '../vendor/autoload.php';
 
 $mohamed = new \DesignPattern\OOP\PHP\Polymorphism\Employee(
@@ -149,4 +153,10 @@ $prototypeMohamedEmployee = new \DesignPattern\Creational\Prototype\EmployeeProt
 );
 
 $ahmedSampleFromPrototype = clone $prototypeMohamedEmployee;
-var_dump($ahmedSampleFromPrototype);
+//var_dump($ahmedSampleFromPrototype);
+
+// Abstract factory
+$client = new FormAbstractFactory\GuiClient(new WebForm\WebFormFactory());
+var_dump($client->createForm());
+$client->setFactory(new MobileForm\MobileFormFactory());
+var_dump($client->createForm());
