@@ -3,6 +3,7 @@
 use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\WebForm;
 use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\MobileForm;
 use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory;
+use DesignPattern\Creational\Singleton\AppSettings;
 
 require_once '../vendor/autoload.php';
 
@@ -157,6 +158,10 @@ $ahmedSampleFromPrototype = clone $prototypeMohamedEmployee;
 
 // Abstract factory
 $client = new FormAbstractFactory\GuiClient(new WebForm\WebFormFactory());
-var_dump($client->createForm());
+//var_dump($client->createForm());
 $client->setFactory(new MobileForm\MobileFormFactory());
-var_dump($client->createForm());
+//var_dump($client->createForm());
+
+// singleton
+$settings = AppSettings::getInstance();
+var_dump($settings::getConfig('Database'));
