@@ -4,6 +4,10 @@ use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\WebForm;
 use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\MobileForm;
 use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory;
 use DesignPattern\Creational\Singleton\AppSettings;
+use DesignPattern\Structural\Adapter\SMSAdapter\MonkeySMSClient;
+use DesignPattern\Structural\Adapter\SMSAdapter\Messages\SMSMessage;
+use DesignPattern\Structural\Adapter\SMSAdapter\Adapters\ABCSMSClientAdapter;
+use DesignPattern\Structural\Adapter\SMSAdapter\Adapters\ABCSMSManager;
 
 require_once '../vendor/autoload.php';
 
@@ -164,4 +168,30 @@ $client->setFactory(new MobileForm\MobileFormFactory());
 
 // singleton
 $settings = AppSettings::getInstance();
-var_dump($settings::getConfig('Database'));
+//var_dump($settings::getConfig('Database'));
+
+// Adapter
+$message = new SMSMessage('Welcome To our Club','015455445454');
+$message2 = new SMSMessage('Please, Join Our Community','455454545454');
+$message3 = new SMSMessage('Your Account has been activated','554412');
+$message4 = new SMSMessage('Thank you for join us','0155233');
+
+$client = new MonkeySMSClient([
+    $message,$message2,$message3
+]);
+
+$client->addMessage($message4);
+
+$client->filterNumbers();
+//$client->send();
+//var_dump($client->getDeliveryStatus());
+
+$client2 = new ABCSMSClientAdapter([
+    $message,
+    $message2,
+    $message3,
+    $message4
+],new ABCSMSManager\SMSManager());
+
+$client2->send();
+var_dump($client2->getDeliveryStatus());
