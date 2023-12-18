@@ -8,6 +8,10 @@ use DesignPattern\Structural\Adapter\SMSAdapter\MonkeySMSClient;
 use DesignPattern\Structural\Adapter\SMSAdapter\Messages\SMSMessage;
 use DesignPattern\Structural\Adapter\SMSAdapter\Adapters\ABCSMSClientAdapter;
 use DesignPattern\Structural\Adapter\SMSAdapter\Adapters\ABCSMSManager;
+use DesignPattern\Structural\Bridge\Grades\Grade1Report;
+use DesignPattern\Structural\Bridge\Reports\HtmlReport;
+use DesignPattern\Structural\Bridge\Reports\XmlReport;
+use DesignPattern\Structural\Bridge\Reports\PlainTextReport;
 
 require_once '../vendor/autoload.php';
 
@@ -193,5 +197,15 @@ $client2 = new ABCSMSClientAdapter([
     $message4
 ],new ABCSMSManager\SMSManager());
 
-$client2->send();
-var_dump($client2->getDeliveryStatus());
+//$client2->send();
+//var_dump($client2->getDeliveryStatus());
+
+
+// Bridge
+
+$reportTool = new Grade1Report(
+    new HtmlReport()
+);
+echo $reportTool->showReport();
+$reportTool->setReport(new XmlReport());
+echo $reportTool->showReport();
