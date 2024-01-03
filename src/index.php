@@ -12,6 +12,7 @@ use DesignPattern\Structural\Bridge\Grades\Grade1Report;
 use DesignPattern\Structural\Bridge\Reports\HtmlReport;
 use DesignPattern\Structural\Bridge\Reports\XmlReport;
 use DesignPattern\Structural\Bridge\Reports\PlainTextReport;
+use DesignPattern\Structural\Facade\FileConverter\CorruptedFileException;
 
 require_once '../vendor/autoload.php';
 
@@ -175,13 +176,13 @@ $settings = AppSettings::getInstance();
 //var_dump($settings::getConfig('Database'));
 
 // Adapter
-$message = new SMSMessage('Welcome To our Club','015455445454');
-$message2 = new SMSMessage('Please, Join Our Community','455454545454');
-$message3 = new SMSMessage('Your Account has been activated','554412');
-$message4 = new SMSMessage('Thank you for join us','0155233');
+$message = new SMSMessage('Welcome To our Club', '015455445454');
+$message2 = new SMSMessage('Please, Join Our Community', '455454545454');
+$message3 = new SMSMessage('Your Account has been activated', '554412');
+$message4 = new SMSMessage('Thank you for join us', '0155233');
 
 $client = new MonkeySMSClient([
-    $message,$message2,$message3
+    $message, $message2, $message3
 ]);
 
 $client->addMessage($message4);
@@ -195,7 +196,7 @@ $client2 = new ABCSMSClientAdapter([
     $message2,
     $message3,
     $message4
-],new ABCSMSManager\SMSManager());
+], new ABCSMSManager\SMSManager());
 
 //$client2->send();
 //var_dump($client2->getDeliveryStatus());
@@ -206,6 +207,16 @@ $client2 = new ABCSMSClientAdapter([
 $reportTool = new Grade1Report(
     new HtmlReport()
 );
-echo $reportTool->showReport();
+//echo $reportTool->showReport();
 $reportTool->setReport(new XmlReport());
-echo $reportTool->showReport();
+//echo $reportTool->showReport();
+
+
+// Facade
+
+try{
+    $converter = new \DesignPattern\Structural\Facade\FileConverter\FileConverterFacade('audioLecture.avi');
+    $converter->convert();
+} catch (CorruptedFileException $e) {
+    echo $e->getMessage() . "\n";
+}
