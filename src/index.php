@@ -214,9 +214,28 @@ $reportTool->setReport(new XmlReport());
 
 // Facade
 
-try{
-    $converter = new \DesignPattern\Structural\Facade\FileConverter\FileConverterFacade('audioLecture.avi');
-    $converter->convert();
-} catch (CorruptedFileException $e) {
-    echo $e->getMessage() . "\n";
+//try {
+//    $converter = new \DesignPattern\Structural\Facade\FileConverter\FileConverterFacade('audioLecture.avi');
+//    $converter->convert();
+//} catch (CorruptedFileException $e) {
+//    echo $e->getMessage() . "\n";
+//}
+
+
+// Decorator
+$isSmsEnabled = true;
+$isWhatsappEnabled = false;
+
+$notifier = new \DesignPattern\Structural\Decorator\EmailNotifier('mohamedkdr66@yahoo.com');
+
+if ($isSmsEnabled) {
+    $notifier = new \DesignPattern\Structural\Decorator\Decorators\SmsNotifierDecorator('0100200300', $notifier);
 }
+
+if ($isWhatsappEnabled) {
+    $notifier = new \DesignPattern\Structural\Decorator\Decorators\WhatsappNotifierDecorator('0100200300', $notifier);
+}
+
+$notifier->notify();
+
+
