@@ -1,18 +1,20 @@
 <?php
 
-use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\WebForm;
-use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory\MobileForm;
-use \DesignPattern\Creational\AbstractFactory\FormAbstractFactory;
+use DesignPattern\Creational\AbstractFactory\FormAbstractFactory;
+use DesignPattern\Creational\AbstractFactory\FormAbstractFactory\MobileForm;
+use DesignPattern\Creational\AbstractFactory\FormAbstractFactory\WebForm;
 use DesignPattern\Creational\Singleton\AppSettings;
-use DesignPattern\Structural\Adapter\SMSAdapter\MonkeySMSClient;
-use DesignPattern\Structural\Adapter\SMSAdapter\Messages\SMSMessage;
 use DesignPattern\Structural\Adapter\SMSAdapter\Adapters\ABCSMSClientAdapter;
 use DesignPattern\Structural\Adapter\SMSAdapter\Adapters\ABCSMSManager;
+use DesignPattern\Structural\Adapter\SMSAdapter\Messages\SMSMessage;
+use DesignPattern\Structural\Adapter\SMSAdapter\MonkeySMSClient;
 use DesignPattern\Structural\Bridge\Grades\Grade1Report;
 use DesignPattern\Structural\Bridge\Reports\HtmlReport;
 use DesignPattern\Structural\Bridge\Reports\XmlReport;
-use DesignPattern\Structural\Bridge\Reports\PlainTextReport;
-use DesignPattern\Structural\Facade\FileConverter\CorruptedFileException;
+use DesignPattern\Structural\Proxy\RouterInterface\Clients\Application1;
+use DesignPattern\Structural\Proxy\RouterInterface\Clients\Application2;
+use DesignPattern\Structural\Proxy\RouterInterface\RouterFactory;
+use DesignPattern\Structural\Proxy\RouterInterface\RouterProxy;
 
 require_once '../vendor/autoload.php';
 
@@ -34,7 +36,7 @@ $microwave = new \DesignPattern\OOP\PHP\AbstractionVSEncapsulation\Microwave(90,
 //var_dump($mohamed->getAge());
 
 if ($microwave->turnOn()) {
-//    var_dump($microwave->deFreeze());
+    //    var_dump($microwave->deFreeze());
     $microwave->turnOff();
 }
 
@@ -236,6 +238,16 @@ if ($isWhatsappEnabled) {
     $notifier = new \DesignPattern\Structural\Decorator\Decorators\WhatsappNotifierDecorator('0100200300', $notifier);
 }
 
-$notifier->notify();
+// $notifier->notify();
 
 
+// Proxy
+$acl = ['APP_1', 'APP_3', 'APP_4'];
+$app1 = new Application1(new DateTime('now'));
+$app2 = new Application2();
+
+$router = new RouterProxy(RouterFactory::createRouter(), $app2, $acl);
+
+if ($router->resolve('http://www.abc.com')) {
+    $router->stream();
+}
