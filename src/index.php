@@ -11,6 +11,10 @@ use DesignPattern\Structural\Adapter\SMSAdapter\MonkeySMSClient;
 use DesignPattern\Structural\Bridge\Grades\Grade1Report;
 use DesignPattern\Structural\Bridge\Reports\HtmlReport;
 use DesignPattern\Structural\Bridge\Reports\XmlReport;
+use DesignPattern\Structural\Composite\DTOs\DataModelDTO\AddressDto;
+use DesignPattern\Structural\Composite\DTOs\DataModelDTO\OrderDto;
+use DesignPattern\Structural\Composite\DTOs\DataModelDTO\OrderOwnerDto;
+use DesignPattern\Structural\Composite\DTOs\DataModelDTO\PurchaseBill;
 use DesignPattern\Structural\Proxy\RouterInterface\Clients\Application1;
 use DesignPattern\Structural\Proxy\RouterInterface\Clients\Application2;
 use DesignPattern\Structural\Proxy\RouterInterface\RouterFactory;
@@ -249,5 +253,23 @@ $app2 = new Application2();
 $router = new RouterProxy(RouterFactory::createRouter(), $app2, $acl);
 
 if ($router->resolve('http://www.abc.com')) {
-    $router->stream();
+    // $router->stream();
 }
+
+
+// Composite
+$address1 = new AddressDto('Alazher 1', 211221, 'Damietta');
+$address2 = new AddressDto('Alazher 2 ', 454545, 'Egypt');
+$address3 = new AddressDto('Alazher 3 ', 454545, 'Minia');
+
+$mohamed = new OrderOwnerDto('Mohamed', $address1);
+$ahmed = new OrderOwnerDto('Ahmed', $address2);
+$ali = new OrderOwnerDto('Ali', $address3);
+
+$order1 = new OrderDto($mohamed, new DateTime('now'), 1200, 2);
+$order2 = new OrderDto($ahmed, new DateTime('now'), 1200, 2);
+$order3 = new OrderDto($ali, new DateTime('now'), 1300, 5);
+
+$purchaseBill = new PurchaseBill([$order1, $order2, $order3]);
+
+var_dump($purchaseBill->render());
