@@ -15,6 +15,11 @@ use DesignPattern\Structural\Composite\DTOs\DataModelDTO\AddressDto;
 use DesignPattern\Structural\Composite\DTOs\DataModelDTO\OrderDto;
 use DesignPattern\Structural\Composite\DTOs\DataModelDTO\OrderOwnerDto;
 use DesignPattern\Structural\Composite\DTOs\DataModelDTO\PurchaseBill;
+use DesignPattern\Structural\Flyweight\GameBoard\GameBoard;
+use DesignPattern\Structural\Flyweight\GameBoard\GameTileBorder;
+use DesignPattern\Structural\Flyweight\GameBoard\GameTileColor;
+use DesignPattern\Structural\Flyweight\GameBoard\GameTileFactory;
+use DesignPattern\Structural\Flyweight\GameBoard\GameTileLevel;
 use DesignPattern\Structural\Proxy\RouterInterface\Clients\Application1;
 use DesignPattern\Structural\Proxy\RouterInterface\Clients\Application2;
 use DesignPattern\Structural\Proxy\RouterInterface\RouterFactory;
@@ -252,9 +257,9 @@ $app2 = new Application2();
 
 $router = new RouterProxy(RouterFactory::createRouter(), $app2, $acl);
 
-if ($router->resolve('http://www.abc.com')) {
-    // $router->stream();
-}
+// if ($router->resolve('http://www.abc.com')) {
+//     $router->stream();
+// }
 
 
 // Composite
@@ -272,4 +277,44 @@ $order3 = new OrderDto($ali, new DateTime('now'), 1300, 5);
 
 $purchaseBill = new PurchaseBill([$order1, $order2, $order3]);
 
-var_dump($purchaseBill->render());
+//var_dump($purchaseBill->render());
+
+
+// flyWeight
+$board = new GameBoard();
+$borderTile1 = new GameTileBorder(
+    'dashed',
+    'thick',
+    GameTileColor::TILE_COLOR_RED,
+    'small',
+    GameTileLevel::TILE_LEVEL_BEGINNER
+);
+$borderTile2 = new GameTileBorder(
+    'black',
+    'thick',
+    GameTileColor::TILE_COLOR_BROWN,
+    'small',
+    GameTileLevel::TILE_LEVEL_EXPERT
+);
+$borderTile3 = new GameTileBorder(
+    'black',
+    'thick',
+    GameTileColor::TILE_COLOR_RED,
+    'medium',
+    GameTileLevel::TILE_LEVEL_INTERMEDIATE
+);
+$borderTile4 = new GameTileBorder( // same number 1
+    'black',
+    'thick',
+    GameTileColor::TILE_COLOR_RED,
+    'small',
+    GameTileLevel::TILE_LEVEL_BEGINNER
+);
+
+$board->addTile($borderTile1);
+$board->addTile($borderTile2);
+$board->addTile($borderTile3);
+$board->addTile($borderTile4);
+
+echo $board . "\n";
+var_dump(GameTileFactory::getTiles());
