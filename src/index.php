@@ -1,5 +1,15 @@
 <?php
 
+use DesignPattern\Behavioral\ChainOfResponsibility\Exceptions\NoUserLoyaltyException;
+use DesignPattern\Behavioral\ChainOfResponsibility\Exceptions\ProductAvailabilityException;
+use DesignPattern\Behavioral\ChainOfResponsibility\Exceptions\ProductShipmentException;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\Handlers\LoyaltyHandler;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\Handlers\OrderServiceHandler;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\Handlers\ProductAvailabilityServiceHandler;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\Handlers\ShipmentAvailabilityServiceHandler;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\Order;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\Product;
+use DesignPattern\Behavioral\ChainOfResponsibility\Order\User;
 use DesignPattern\Creational\AbstractFactory\FormAbstractFactory;
 use DesignPattern\Creational\AbstractFactory\FormAbstractFactory\MobileForm;
 use DesignPattern\Creational\AbstractFactory\FormAbstractFactory\WebForm;
@@ -316,5 +326,27 @@ $board->addTile($borderTile2);
 $board->addTile($borderTile3);
 $board->addTile($borderTile4);
 
-echo $board . "\n";
-var_dump(GameTileFactory::getTiles());
+// echo $board . "\n";
+// var_dump(GameTileFactory::getTiles());
+
+
+// Behavioral Design Patterns
+// Chain of Responsibility
+$user = new User('USR-101', 'Mohamed Fathi');
+$product = new Product('PRD-101', 'Laptop', 7);
+$order = new Order($user, $product, new \DateTime('2019-08-10'));
+
+$loyaltyService = new LoyaltyHandler();
+$loyaltyService->setNextHandler(new ProductAvailabilityServiceHandler())
+    ->setNextHandler(new ShipmentAvailabilityServiceHandler)
+    ->setNextHandler(new OrderServiceHandler);
+
+try {
+    $loyaltyService->handle($order);
+} catch (NoUserLoyaltyException $e) {
+    echo $e->getMessage() . "\n";
+} catch (ProductAvailabilityException $e) {
+    echo $e->getMessage() . "\n";
+} catch (ProductShipmentException $e) {
+    echo $e->getMessage() . "\n";
+}
